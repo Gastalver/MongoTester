@@ -1,0 +1,21 @@
+{
+  "name": "mongotester",
+  "version": "1.0.0",
+  "description": "Pruebas con mongoDB",
+  "main": "app.js",
+  "scripts": {
+    "Monitoriza app.js": "nodemon ./app.js localhost 3000",
+    "Monitoriza app2.js": "nodemon ./app2.js localhost 3000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "assert": "^1.4.1",
+    "body-parser": "^1.16.0",
+    "express": "^4.14.1",
+    "mongodb": "^2.2.22",
+    "mongoose": "^4.8.1",
+    "path": "^0.12.7"
+  }
+}
