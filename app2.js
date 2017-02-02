@@ -24,10 +24,11 @@ mongoose.connection.on('open', function() {
 // Primero creamos el Schema (Prototipo o molde de los modelos).
 // siquiendo la sintaxis nombrecampo: {type: tipo de datos, default: valor por defecto}
 var Account = new Schema({
-    username: { type: String },
+    username: { type: String, required: true },
     date_created: { type: Date, default: Date.now },
     visits: { type: Number, default: 0 },
-    active: { type: Boolean, default: false }
+    active: { type: Boolean, default: false },
+    age: { type: Number, required: true, min: 18, max: 50}
 });
 
 // Luego creamos el modelo "padre" o sea, la clase.
@@ -37,7 +38,7 @@ var AccountModel = mongoose.model('Account', Account);
 // Si no asignamos valores a los campos, tomarán el valor por defecto.
 
 var newUser = new AccountModel(
-    { username: 'Antonio'});
+    { username: 'Vejete', age: 19});
 console.log(newUser.username);
 console.log(newUser.date_created);
 console.log(newUser.visits);
@@ -46,6 +47,15 @@ console.log(newUser.active);
 // Lo guardamos con el método save que tienen todos los documentos creados a partir de un modelo.
 // Obsérvese que se crea automáticamente una coleccion cuyo nombre es el plural del Schema. En este
 // caso se crea una colección llamada Accounts.
+
+
+// Metodo para validar los documentos ANTES de grabarlos. Si no se supera la validación salta un error y no se graba.
+// EL métdo validate viene de serie con Mongoose.
+newUser.validate(function(error){
+    if (error){
+        console.log("No se ha superado la validación por el siguiente motivo: " + error);
+    }
+});
 
 newUser.save();
 
@@ -61,6 +71,7 @@ AccountModel.find({username: 'Antonio'}, function(err,accounts){
         console.log("Date Created: " + accounts[n].date_created);
         console.log("Visits: " + accounts[n].visits);
         console.log("Active?: " + accounts[n].active);
+        console.log("Age: " + accounts[n].age);
         console.log("\n");
     }
 });
